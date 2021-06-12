@@ -1,5 +1,6 @@
-# Hikicovery 팀
-## 프로젝트 내용
+# Hikicovery
+- Discovery Expedition Clone Project
+## 
 - Django를 사용한 디스커버리 익스페디션 clone
 - Miniconda를 사용한 가상환경 세팅
 - git을 사용한 첫 번째 협업
