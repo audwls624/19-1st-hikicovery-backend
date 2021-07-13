@@ -1,6 +1,10 @@
 import json
 import math
 
+from .serializers import *
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
 from django.http  import JsonResponse
 from django.views import View
 from django.db.models import Q 
@@ -27,6 +31,14 @@ class BestItemView(View):
                     }                        
                 for product in products[:SHOW_NUMBER]]
         return JsonResponse({'best_items':best_items}, status=200)
+
+#DRF 변환중
+class BestItemModelView(APIView):
+    def get(self,request):
+        SHOW_NUMBER = 8
+        products = Product.objects.all().prefetch_related('image_set','productdetail_set').order_by('-productsale__product_sales')[:8]
+        serialzer = BestItemSerializer(products,many=True)
+        return Response(serialzer.data, status=status.HTTP_200_OK)
 
 class ProductView(View):
     def get(self, request):

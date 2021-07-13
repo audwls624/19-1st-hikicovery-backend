@@ -34,7 +34,7 @@ class Size(models.Model):
 
 class Image(models.Model):
     image_url            = models.URLField(max_length=500)
-    product              = models.ForeignKey('Product', on_delete=models.CASCADE)
+    product              = models.ForeignKey('Product', on_delete=models.CASCADE, related_name='images')
     image_classification = models.ForeignKey('ImageClassification', on_delete=models.SET_NULL, null=True)
     
     class Meta:
