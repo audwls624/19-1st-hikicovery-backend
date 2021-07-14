@@ -1,7 +1,7 @@
 import json
 import math
 
-from .serializers import *
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 
@@ -10,6 +10,7 @@ from django.views import View
 from django.db.models import Q 
 
 from products.models import Product, ProductDetail, ProductSale, ProductSeason, Season, Size, Image, ImageClassification, Category
+from .serializers import *
 
 class BestItemView(View):
     def get(self, request):
@@ -36,7 +37,7 @@ class BestItemView(View):
 class BestItemModelView(APIView):
     def get(self,request):
         SHOW_NUMBER = 8
-        products = Product.objects.all().prefetch_related('image_set','productdetail_set').order_by('-productsale__product_sales')[:8]
+        products = Product.objects.prefetch_related('images','productdetail_set').all().order_by('-productsale__product_sales')[:8]
         serialzer = BestItemSerializer(products,many=True)
         return Response(serialzer.data, status=status.HTTP_200_OK)
 
